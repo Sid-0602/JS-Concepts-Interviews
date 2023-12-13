@@ -119,3 +119,32 @@ function sum(...theArgs) {
 
 
 console.log("Rest example: ",sum(1,2,3,4));
+
+// Q: What is callback function: 
+// A callback function is a function passed into another function as an argument, 
+// which is then invoked inside the outer function to complete some kind of routine or action.
+
+
+function sayHello(callback){
+    console.log("This is sayhello main function");
+    callback(sayHi);
+}
+
+function sayHi(){
+    console.log("Hi from callback");
+}
+
+sayHello(sayHi); //sayhi function is passed into another function .
+
+// Q. Arrow Function:  ES6 version, add arrow instead of writing "function" .
+const normal = function(n){
+    return n*2;
+}
+
+const arrowFunction = (n)=>{ return n*2}
+// Arrow function have implicit "return" keyword: 
+
+const arrowFun = (n)=> n*2
+//arrow function cannot have arguments without passing parameters.
+
+
