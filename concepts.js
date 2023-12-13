@@ -142,9 +142,116 @@ const normal = function(n){
 }
 
 const arrowFunction = (n)=>{ return n*2}
-// Arrow function have implicit "return" keyword: 
+// Arrow function have implicit "return" keyword and arrow function cannot have arguments without passing parameters.
 
 const arrowFun = (n)=> n*2
-//arrow function cannot have arguments without passing parameters.
+
+// Q: Lexical Scope: A variable defined outside of function can be accessed but the variable defined inside of 
+// function cannot be outside of it's local scope.
+
+var username = "Sid";
+//global scope
+function local(){   
+    //local scope
+    var password = "this is local";
+
+    var lastname = "Jadhav";
+    function displayName(){
+        //inner scope
+        console.log("This is called by inner scope:  "+ lastname);
+    }
+
+    console.log("This is called by local scope : " + username);
+    displayName();
+}
+
+// console.log(password); //this cannot be referenced. 
+local();
+
+// Q: What are Closures: A closure is the combination of a function bundled together (enclosed) with references to its surrounding state 
+// (the lexical environment). In other words, a closure gives you access to an outer function's scope from an inner function. 
+// In JavaScript, closures are created every time a function is created, at function creation time.
+// Closures helps to use private variables in JS: 
+
+var outername = "This is outer scope"
+function makeFunc(){
+    var name = "Sid Jadhav";
+    function displayname(){
+        console.log("This is due to Closure: " + name);
+        console.log("This is outer scope: "+ outername);
+    }
+    return displayname;
+}
+
+makeFunc()(); //as it return us another function, we need to use two ().
+
+//Closure scope chain: 
+/*  
+    Every closure has three scopes:
+
+    Local scope (Own scope)
+    Enclosing scope (can be block, function, or module scope)
+    Global scope
+
+*/
+
+// global scope
+const e = 10;
+function sum(a) {
+    return function (b) {
+        return function (c) {
+            // outer functions scope
+            return function (d) {
+                // local scope
+                return a + b + c + d + e;
+            };
+        };
+    };
+}
+
+console.log("This is callback scope: "+sum(1)(2)(3)(4));
+
+// Q: settimeout + block scope : 
+
+
+// 3 3 3 will be print due to "var" as it will have function scope. 
+function printFuncVar(){
+    for(var i=0;i<3;i++){
+        setTimeout(function log(){
+            console.log("This is due to var function scope: " + i);
+        }, i*1000);
+    }
+}
+
+// 1 2 3 will be printed due to "let" as it will have local scope.
+function printFuncLet(){
+    for(let i=0;i<3;i++){
+        setTimeout(function log(){
+            console.log("This is due to let function scope: " + i);
+        }, i*1000);
+    }
+}
+
+printFuncVar();
+printFuncLet();
+
+//how to convert the above code using "var" only? 
+//Use Closure to change scope of i to local: 
+
+function printFuncLocal(){
+    for(var i=0;i<3;i++){
+
+        function inner(i){
+            setTimeout(function log(){
+                console.log("This is correct var function scope: " + i);
+            }, i*1000);
+        } 
+        inner(i);  
+    }
+}
+
+printFuncLocal();
+
+
 
 
