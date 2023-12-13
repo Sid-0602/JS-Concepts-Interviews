@@ -62,7 +62,60 @@ function scope(){
     }
     add();
 }
-
-// Q: 
-
 scope();
+
+// Q: Hoisting for variables and functions: 
+// JavaScript Hoisting refers to the process whereby the interpreter appears to 
+// move the declaration of functions, variables, classes, or imports to the top of their scope, 
+// prior to execution of the code.
+
+// Note: Function are entirely copied into global scope for hoisting and variables are just intialised. 
+
+functionName();
+function functionName(){
+    s = "This is hoisted function";
+
+    console.log("This is variable hoisted: " ,x);
+    var x = 5;
+    console.log("This is variable after hoisting: ",x);
+    console.log(s);
+}
+
+
+// Q: Params VS Arguments: 
+// A parameter is a variable in a function definition. 
+// It is a placeholder and hence does not have a concrete value.
+
+// An argument is a value passed during function invocation.
+// In the below example, x and y are params 
+function foo(x,y){
+    console.log((x-y)); 
+}
+
+foo(5,6); //5,6 are arguments
+
+// Q: Spread VS Rest operator:
+
+// Spread: The spread (...) syntax allows an iterable, such as an array or string, to be expanded in places 
+// where zero or more arguments (for function calls) or elements (for array literals) are expected.
+
+// Q: Rest: The rest parameter syntax allows a function to accept an indefinite number of arguments as an array,
+//  providing a way to represent variadic functions in JavaScript.
+
+function sumOfTwoNums(n,m){
+    console.log("Spread example: ",n+m);
+}
+
+var arr = [5,6,4];
+sumOfTwoNums(...arr); //this allows to pass first two arguments into function. 
+
+function sum(...theArgs) {
+    let total = 0;
+    for (const arg of theArgs) {
+        total += arg;
+    }
+    return total;
+}
+
+
+console.log("Rest example: ",sum(1,2,3,4));
