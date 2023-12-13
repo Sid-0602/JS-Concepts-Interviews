@@ -37,13 +37,32 @@ displayResult(result);
 
 // Q: What is closures: Ability of function to use variables outside of it's lexical scope, known as closures.
 
-num=10;
-(function (num){
-    let num=5;
-    console.log("Num is: ",num);
+function init() {
+    var name = "Mozilla"; // name is a local variable created by init
+    function displayName() {
+      // displayName() is the inner function, that forms the closure
+      console.log(name); // use variable declared in the parent function
+    }
+    displayName();
+}
+init(); 
 
-})(num);
+// Q: Function scope in JS: 
 
-(function(num){
-    console.log("Num is: ",nun);
-})
+var num1=20,
+num2=3;
+name="This is JS";
+
+function scope(){
+    var num1 = 2,
+    num2=5;
+
+    function add(){
+        console.log(name + " " + (num1+num2));
+    }
+    add();
+}
+
+// Q: 
+
+scope();
