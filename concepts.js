@@ -235,7 +235,7 @@ function printFuncLet(){
 printFuncVar();
 printFuncLet();
 
-//how to convert the above code using "var" only? 
+// Q: how to convert the above code using "var" only? 
 //Use Closure to change scope of i to local: 
 
 function printFuncLocal(){
@@ -253,5 +253,59 @@ function printFuncLocal(){
 printFuncLocal();
 
 
+// Q: What is Module Pattern: 
+var Module = (function(){
+    function privateMethod(){
+        console.log("This is private method");
+    }
 
+    return {
+        publicMethod: function(){
+            console.log("This is public method");
+            privateMethod();
+        }
+    }
+})()
 
+Module.publicMethod();
+
+// Q: Implement caching/Memoize function in JS:
+// caching and memoizing is used to store results of recurring tasks and caching them. 
+
+//this function stores the arguments and result for first time. 
+function memoize(fn){
+    const res = {}; //it contains parameters and result: 
+    return function(...args){
+        var argsCache = JSON.stringify(args);
+        if(!res[argsCache]){
+            res[argsCache] = fn.call(this, ...args);
+        }
+        return res[argsCache];
+    }
+}
+
+const heavyCalculation = function(numA, numB){
+    for(let i=0;i<1000000;i++){};
+
+    return (numA*numB);
+}
+
+const memoizedheavy = memoize(heavyCalculation);
+
+//first and second call is has same data which is needed to compute. 
+console.time("First call without caching");
+console.log(heavyCalculation(34555,9385893));
+console.timeEnd("First call without caching");
+
+console.time("Second call without caching");
+console.log(heavyCalculation(34555,9385893));
+console.timeEnd("Second call without caching");
+
+//this is after caching: 
+console.time("First call after caching");
+console.log(memoizedheavy(34555,9385893));
+console.timeEnd("First call after caching");
+
+console.time("Second call after caching");
+console.log(memoizedheavy(34555,9385893));
+console.timeEnd("Second call after caching");
