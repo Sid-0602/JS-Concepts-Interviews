@@ -309,3 +309,58 @@ console.timeEnd("First call after caching");
 console.time("Second call after caching");
 console.log(memoizedheavy(34555,9385893));
 console.timeEnd("Second call after caching");
+
+
+// Currying: 
+// Currying is a technique of evaluating function with multiple arguments, 
+// into sequence of function with single argument.
+// f(a,b) -> f(a)(b)
+
+function f(a){
+    return function (b){
+        return `${a} ${b}`
+    }
+}
+
+console.log(f((5)));
+
+// Q: Implement sum(2)(6)(1): return result with addition. 
+
+//function (anynonumous) is created for every variable:  
+function sumFunction(a){
+    return function(b){
+        return function(c){
+            return a+b+c;
+        }    
+    }
+}
+
+console.log("This is sum with currying: ",sumFunction(2)(4)(3));
+
+
+// Q: Infinite currying: 
+// for every function, check if it has params.
+
+function add(a){
+    return function(b){
+        if(b) return add(a+b);
+        return a;
+    }
+}
+
+console.log(add(5)(2)(4)(8));
+
+//Currying is used for DOM manipulation as well.
+
+// Q: DOM manipulations: DOM manipulation is a common technique used in web development to add, remove, and modify elements of a website.
+// It involves interacting with the Document Object Model (DOM), a set of APIs for controlling HTML and 
+// styling information that makes heavy use of the Document object.
+
+function updateEelementText(id){
+    return function(context){
+        document.querySelector("#" + id).textContent = content;
+    };
+}
+
+const updateHeader = updateEelementText("heading");
+updateHeader("This is updated header!");
